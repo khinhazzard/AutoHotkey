@@ -18,8 +18,9 @@ return
 *WheelDown::return
 *WheelUp::return
 
-; 2. Block Game Mute AND Trigger ability 'Y'
+; 2. Block Game Mute AND Trigger Numpad5 Item + 'Y' Ability
 ^s::
+    Send {Numpad5}
     Send, y
 return
 
@@ -28,11 +29,12 @@ return
 ; 3. Town Hall Cycling (Backspace Remap)
 *!`::Send {Backspace}
 
-; 4. Inventory Remaps (Fixed Alt-Modifier logic)
-!q::Send {Numpad7}
-!w::Send {Numpad8}
-!a::Send {Numpad4}
-!s::Send {Numpad5}
+; 4. Inventory Remaps (Shifted Top 4 to Ctrl to free up WASD Camera)
+^q::Send {Numpad7}
+^w::Send {Numpad8}
+^a::Send {Numpad4}
+; Note: Ctrl+S is handled right above in Section 2 to do both Numpad5 and Y!
+
 !z::Send {Numpad1}
 !x::Send {Numpad2}
 
@@ -50,5 +52,49 @@ return
     }
     SetCapsLockState, AlwaysOff
 return
+
+; 6. Camera Panning (Smooth Alt + WASD + Shift Compatibility)
+~LAlt::Return
+~RAlt::Return
+
+!w::
++!w::
+Send {Up down}
+Return
+
+!w up::
++!w up::
+Send {Up up}
+Return
+
+!a::
++!a::
+Send {Left down}
+Return
+
+!a up::
++!a up::
+Send {Left up}
+Return
+
+!s::
++!s::
+Send {Down down}
+Return
+
+!s up::
++!s up::
+Send {Down up}
+Return
+
+!d::
++!d::
+Send {Right down}
+Return
+
+!d up::
++!d up::
+Send {Right up}
+Return
 
 #IfWinActive
