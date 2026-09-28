@@ -38,6 +38,9 @@ return
 !z::Send {Numpad1}
 !x::Send {Numpad2}
 
+; HARD BLOCK: Intercepts and blocks Alt+Q to prevent accidental game quits!
+!q::Return
+
 ; 5. Health Bar Toggle (Original "No-Blink" logic)
 *CapsLock::
     bToggle := !bToggle
