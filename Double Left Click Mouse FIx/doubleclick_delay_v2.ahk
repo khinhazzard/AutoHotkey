@@ -8,7 +8,7 @@ return
 *LButton::
     ; 100ms threshold. Filters hardware glitches on your broken main click.
     TimePassed := A_TickCount - LastClickTime
-    if (TimePassed > 100) {
+    if (TimePassed > 150) {
         LastClickTime := A_TickCount
         SendInput {Blind}{LButton DownR}
     }
