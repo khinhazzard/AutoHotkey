@@ -6,7 +6,7 @@ LastClickTime := 0
 return
 
 *LButton::
-    ; 100ms threshold. Filters hardware glitches on your broken main click.
+    ; 150ms threshold blocks the hardware glitches on the initial down press.
     TimePassed := A_TickCount - LastClickTime
     if (TimePassed > 150) {
         LastClickTime := A_TickCount
@@ -15,13 +15,15 @@ return
 return
 
 *LButton Up::
-    Sleep, 40
-    
-    ; If your finger is still physically holding the button, ignore the glitch
-    if (GetKeyState("LButton", "P")) {
+    ; NEW CHANGE: If the release happens too quickly after the press,
+    ; it's a slow-release hardware bounce. Block it.
+    if (A_TickCount - LastClickTime < 150) {
+        ; Enforce a single, clean release to Windows and reset the clock
+        SendInput {Blind}{LButton Up}
+        LastClickTime := A_TickCount
         return
     }
     
-    ; If you actually let go, send the Up signal to Windows
+    ; Otherwise, it's a normal release (like after dragging), so let it pass through.
     SendInput {Blind}{LButton Up}
 return
